@@ -32,7 +32,7 @@ export default function Chat() {
   });
 
   useEffect(() => {
-    if (initialMessages) {
+    if (initialMessages && Array.isArray(initialMessages)) {
       setMessages(initialMessages);
     }
   }, [initialMessages]);
@@ -103,17 +103,17 @@ export default function Chat() {
               </Button>
             </Link>
             <Avatar className="w-10 h-10">
-              <AvatarImage src={otherUser.avatar || undefined} />
+              <AvatarImage src={otherUser?.avatar || undefined} />
               <AvatarFallback>
-                {otherUser.firstName[0]}{otherUser.lastName[0]}
+                {otherUser?.firstName?.[0]}{otherUser?.lastName?.[0]}
               </AvatarFallback>
             </Avatar>
             <div className="ml-4">
               <CardTitle className="text-lg">
-                {otherUser.firstName} {otherUser.lastName}
+                {otherUser?.firstName} {otherUser?.lastName}
               </CardTitle>
               <p className="text-sm text-gray-500">
-                {otherUser.profile?.company || otherUser.role}
+                {otherUser?.profile?.company || otherUser?.role}
               </p>
             </div>
           </CardHeader>

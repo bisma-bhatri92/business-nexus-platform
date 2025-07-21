@@ -8,7 +8,7 @@ interface ChatMessageProps {
 }
 
 export function ChatMessage({ message, isOwn }: ChatMessageProps) {
-  const formattedTime = new Date(message.timestamp).toLocaleTimeString('en-US', {
+  const formattedTime = new Date(message.timestamp || new Date()).toLocaleTimeString('en-US', {
     hour: 'numeric',
     minute: '2-digit',
     hour12: true,

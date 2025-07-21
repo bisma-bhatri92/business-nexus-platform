@@ -43,7 +43,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
           try {
             const decoded = jwt.verify(message.token, JWT_SECRET) as any;
             userId = decoded.userId;
-            clients.set(userId, ws);
+            if (userId) {
+              clients.set(userId, ws);
+            }
             ws.send(JSON.stringify({ type: 'auth_success' }));
           } catch (error) {
             ws.send(JSON.stringify({ type: 'auth_error', message: 'Invalid token' }));

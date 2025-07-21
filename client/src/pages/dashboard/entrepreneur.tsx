@@ -65,8 +65,8 @@ export default function EntrepreneurDashboard() {
     setLocation(`/chat/${userId}`);
   };
 
-  const pendingRequests = requests?.filter((req: any) => req.status === 'pending' && req.receiverId === user?.id) || [];
-  const acceptedRequests = requests?.filter((req: any) => req.status === 'accepted') || [];
+  const pendingRequests = (requests || []).filter((req: any) => req.status === 'pending' && req.receiverId === user?.id);
+  const acceptedRequests = (requests || []).filter((req: any) => req.status === 'accepted');
 
   return (
     <DashboardLayout>

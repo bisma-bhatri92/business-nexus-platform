@@ -48,7 +48,7 @@ export default function Profile() {
 
   // Initialize form data when profile loads
   useState(() => {
-    if (profileData?.profile) {
+    if (profileData && profileData.profile) {
       setFormData({
         company: profileData.profile.company || '',
         title: profileData.profile.title || '',
@@ -151,22 +151,22 @@ export default function Profile() {
           <CardContent className="p-8">
             <div className="flex flex-col md:flex-row items-start md:items-center -mt-20 md:-mt-16">
               <Avatar className="w-32 h-32 border-4 border-white">
-                <AvatarImage src={profileData.avatar || undefined} />
+                <AvatarImage src={profileData?.avatar || undefined} />
                 <AvatarFallback className="text-2xl">
-                  {profileData.firstName[0]}{profileData.lastName[0]}
+                  {profileData?.firstName?.[0]}{profileData?.lastName?.[0]}
                 </AvatarFallback>
               </Avatar>
               <div className="md:ml-8 mt-4 md:mt-0 flex-1">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between">
                   <div>
                     <h1 className="text-3xl font-bold text-gray-900">
-                      {profileData.firstName} {profileData.lastName}
+                      {profileData?.firstName} {profileData?.lastName}
                     </h1>
                     <p className="text-xl text-gray-600">
-                      {formData.title || `${profileData.role.charAt(0).toUpperCase()}${profileData.role.slice(1)}`}
+                      {formData.title || `${profileData?.role?.charAt(0).toUpperCase()}${profileData?.role?.slice(1)}`}
                       {formData.company && ` at ${formData.company}`}
                     </p>
-                    {profileData.location && (
+                    {profileData?.location && (
                       <p className="text-gray-500 mt-1 flex items-center">
                         <MapPin className="w-4 h-4 mr-1" />
                         {profileData.location}
@@ -222,7 +222,7 @@ export default function Profile() {
                 <CardTitle>About</CardTitle>
               </CardHeader>
               <CardContent>
-                {profileData.bio ? (
+                {profileData?.bio ? (
                   <p className="text-gray-600 leading-relaxed">{profileData.bio}</p>
                 ) : (
                   <p className="text-gray-500 italic">No bio available</p>

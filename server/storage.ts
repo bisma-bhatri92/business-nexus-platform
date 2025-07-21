@@ -61,9 +61,15 @@ export class MemStorage implements IStorage {
     const hashedPassword = await bcrypt.hash(insertUser.password, 10);
     const id = this.currentUserId++;
     const user: User = {
-      ...insertUser,
       id,
+      firstName: insertUser.firstName,
+      lastName: insertUser.lastName,
+      email: insertUser.email,
       password: hashedPassword,
+      role: insertUser.role,
+      bio: insertUser.bio || null,
+      location: insertUser.location || null,
+      avatar: insertUser.avatar || null,
       createdAt: new Date(),
     };
     this.users.set(id, user);
@@ -84,7 +90,24 @@ export class MemStorage implements IStorage {
 
   async createProfile(insertProfile: InsertProfile): Promise<Profile> {
     const id = this.currentProfileId++;
-    const profile: Profile = { ...insertProfile, id };
+    const profile: Profile = {
+      id,
+      userId: insertProfile.userId,
+      company: insertProfile.company || null,
+      title: insertProfile.title || null,
+      industry: insertProfile.industry || null,
+      stage: insertProfile.stage || null,
+      founded: insertProfile.founded || null,
+      employees: insertProfile.employees || null,
+      fundingAmount: insertProfile.fundingAmount || null,
+      fundingUse: insertProfile.fundingUse || null,
+      equityOffered: insertProfile.equityOffered || null,
+      website: insertProfile.website || null,
+      linkedin: insertProfile.linkedin || null,
+      skills: insertProfile.skills || null,
+      portfolioCompanies: insertProfile.portfolioCompanies || null,
+      investmentInterests: insertProfile.investmentInterests || null,
+    };
     this.profiles.set(id, profile);
     return profile;
   }
@@ -125,8 +148,11 @@ export class MemStorage implements IStorage {
   async createCollaborationRequest(insertRequest: InsertCollaborationRequest): Promise<CollaborationRequest> {
     const id = this.currentRequestId++;
     const request: CollaborationRequest = {
-      ...insertRequest,
       id,
+      senderId: insertRequest.senderId,
+      receiverId: insertRequest.receiverId,
+      message: insertRequest.message || null,
+      status: insertRequest.status || "pending",
       createdAt: new Date(),
     };
     this.collaborationRequests.set(id, request);
@@ -170,7 +196,7 @@ export class MemStorage implements IStorage {
         (message.senderId === userId1 && message.receiverId === userId2) ||
         (message.senderId === userId2 && message.receiverId === userId1)
       )
-      .sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
+      .sort((a, b) => (a.timestamp?.getTime() || 0) - (b.timestamp?.getTime() || 0));
     
     return messages.map(message => {
       const sender = this.users.get(message.senderId)!;

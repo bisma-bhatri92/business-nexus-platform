@@ -62,7 +62,7 @@ export default function InvestorDashboard() {
     sendRequestMutation.mutate(userId);
   };
 
-  const filteredEntrepreneurs = entrepreneurs?.filter((entrepreneur: any) => {
+  const filteredEntrepreneurs = (entrepreneurs || []).filter((entrepreneur: any) => {
     const matchesSearch = searchTerm === '' || 
       entrepreneur.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       entrepreneur.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
